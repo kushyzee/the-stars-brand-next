@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Montserrat, Lora } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -41,7 +42,12 @@ export default function RootLayout({
         lora.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>
+        <main>
+          <Toaster richColors />
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

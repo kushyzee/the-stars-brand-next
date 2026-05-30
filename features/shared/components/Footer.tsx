@@ -1,6 +1,7 @@
-import { Link } from "react-router";
-import { Button } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { menu, whatsappUrl } from "@/lib/utilities";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -16,8 +17,11 @@ export default function Footer() {
             Get in touch with us to discuss your custom tailoring or crochet
             project
           </p>
-          <Link to="/contact">
-            <Button variant="outline">Contact Us</Button>
+          <Link
+            href="/contact"
+            className={cn(buttonVariants({ variant: "outline" }))}
+          >
+            Contact Us
           </Link>
         </div>
         <div className="mt-14 shrink-0 md:mt-0 md:max-w-40">
@@ -90,7 +94,7 @@ export default function Footer() {
           <ul className="mt-8 flex flex-col items-center gap-4 md:mt-0 md:flex-row md:items-center md:gap-6 lg:gap-8">
             {menu.map((item) => (
               <li key={item.name}>
-                <Link to={item.path} className="text-sm">
+                <Link href={item.path} className="text-sm">
                   {item.name}
                 </Link>
               </li>

@@ -1,9 +1,12 @@
+"use client";
+
 import { motion, stagger } from "motion/react";
+import Image, { StaticImageData } from "next/image";
 
 interface PageHeaderProps {
   title: string;
   subtitle: string;
-  image: string;
+  image: StaticImageData;
 }
 
 const headerParent = {
@@ -46,7 +49,8 @@ export default function PageHeader({
       className="relative mt-16 mb-28 h-[450px] bg-cover md:h-[500px] lg:mt-20 lg:h-[550px]"
     >
       <div className="absolute inset-0 h-full">
-        <img
+        <Image
+          alt="hero background"
           className="h-full w-full object-cover object-right md:object-top"
           src={image}
         />
