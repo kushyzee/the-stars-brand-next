@@ -1,17 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { logout } from "@/features/auth/actions/auth.actions";
+import { DashboardStats } from "@/features/admin/components/DashboardStats";
+import { getDashboardStats } from "../data/dashboard.data";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const stats = await getDashboardStats();
+
   return (
     <div>
-      <h1 className="font-playfair text-3xl font-bold text-foreground-black">
-        DashboardPage
-      </h1>
-      <form action={logout}>
-        <Button variant="outline" type="submit">
-          Logout
-        </Button>
-      </form>
+      <h1>Dashboard</h1>
+      <DashboardStats stats={stats} />
     </div>
   );
 }
