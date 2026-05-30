@@ -8,7 +8,7 @@ export default function AdminLayout({
   return (
     <div>
       <AdminNav />
-      <main>{children}</main>
+      <main className="pt-16 lg:pt-20">{children}</main>
     </div>
   );
 }

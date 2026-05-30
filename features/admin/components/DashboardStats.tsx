@@ -17,7 +17,7 @@ export function DashboardStats({ stats }: Props) {
       {statCards(stats).map((card) => (
         <div
           key={card.label}
-          className="bg-card border border-border rounded-md px-5 py-4 flex flex-col gap-1"
+          className="bg-card border border-border px-5 py-4 flex flex-col gap-1"
         >
           <p className="font-montserrat text-2xl font-bold text-foreground-black leading-none">
             {card.value}
