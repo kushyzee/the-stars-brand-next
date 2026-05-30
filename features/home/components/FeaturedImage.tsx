@@ -21,7 +21,7 @@ export default function FeaturedImage({
       transition={{ duration: 0.4, delay: 0.1 * index }}
       viewport={{ margin: "-150px 0px", once: true }}
     >
-      <Image className="aspect-auto h-[423] w-full" src={image} alt={alt} />
+      <Image className="aspect-auto h-[423px] w-auto" src={image} alt={alt} />
     </motion.div>
   );
 }
