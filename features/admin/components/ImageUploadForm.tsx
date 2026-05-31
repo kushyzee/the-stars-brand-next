@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import {
@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import type { Category } from "@/lib/types";
+import { toast } from "sonner";
 
 type Props = {
   categories: Category[];
@@ -40,7 +41,10 @@ export function ImageUploadForm({ categories }: Props) {
     },
   });
 
-  const categoryOption = form.watch("categoryOption");
+  const categoryOption = useWatch({
+    control: form.control,
+    name: "categoryOption",
+  });
 
   async function onSubmit(data: UploadFormValues) {
     setIsPending(true);
@@ -94,15 +98,31 @@ export function ImageUploadForm({ categories }: Props) {
       return;
     }
 
-    router.push("/admin/dashboard");
+    setIsPending(false);
+    toast.success("image uploaded successfully");
+    form.reset();
+    setConversionInfo(null);
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="bg-card border border-border p-6 flex flex-col gap-6"
+    >
+      {/* Server error banner */}
+      {serverError && (
+        <div className="rounded-md bg-destructive/10 border border-destructive/30 px-4 py-3">
+          <p className="text-destructive text-sm font-medium">{serverError}</p>
+        </div>
+      )}
 
+      {/* Conversion info pill */}
       {conversionInfo && (
-        <p className="text-sm text-muted-foreground">{conversionInfo}</p>
+        <div className="inline-flex self-start">
+          <p className="text-green-600 text-xs bg-green-600/10 px-4 py-2 rounded-full">
+            {conversionInfo}
+          </p>
+        </div>
       )}
 
       {/* Image file */}
@@ -111,15 +131,21 @@ export function ImageUploadForm({ categories }: Props) {
         control={form.control}
         render={({ field: { onChange, ...field }, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="file">Image</FieldLabel>
+            <FieldLabel
+              htmlFor="file"
+              className="text-foreground-black font-medium text-sm"
+            >
+              Image
+            </FieldLabel>
             <Input
               {...field}
               id="file"
               type="file"
-              accept="image/jpeg,image/png,image/webp"
+              accept="image/jpeg,image/png,image/webp,image/jpg"
               aria-invalid={fieldState.invalid}
               onChange={(e) => onChange(e.target.files?.[0])}
               value={undefined}
+              className="placeholder:text-muted-foreground w-full h-14"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -132,12 +158,18 @@ export function ImageUploadForm({ categories }: Props) {
         control={form.control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="title">Title</FieldLabel>
+            <FieldLabel
+              htmlFor="title"
+              className="text-foreground-black font-medium text-sm"
+            >
+              Title
+            </FieldLabel>
             <Input
               {...field}
               id="title"
               placeholder="e.g. Ankara Evening Dress"
               aria-invalid={fieldState.invalid}
+              className="placeholder:text-muted-foreground w-full"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -150,8 +182,11 @@ export function ImageUploadForm({ categories }: Props) {
         control={form.control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="description">
-              Description{" "}
+            <FieldLabel
+              htmlFor="description"
+              className="text-foreground-black font-medium text-sm"
+            >
+              Description
               <span className="text-muted-foreground">(optional)</span>
             </FieldLabel>
             <Textarea
@@ -159,34 +194,40 @@ export function ImageUploadForm({ categories }: Props) {
               id="description"
               placeholder="Brief description of this piece..."
               aria-invalid={fieldState.invalid}
+              className="border-input text-foreground placeholder:text-muted-foreground w-full"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         )}
       />
 
-      {/* Category option selector */}
+      {/* Category option selector; pill toggles */}
       <Controller
         name="categoryOption"
         control={form.control}
         render={({ field }) => (
           <Field>
-            <FieldLabel>Category</FieldLabel>
-            <div>
+            <FieldLabel className="text-foreground-black font-medium text-sm">
+              Category
+            </FieldLabel>
+            <div className="flex gap-2 flex-wrap">
               {[
                 { value: "none", label: "No category" },
                 { value: "existing", label: "Pick existing" },
                 { value: "new", label: "Create new" },
               ].map((option) => (
-                <label key={option.value}>
-                  <input
-                    type="radio"
-                    value={option.value}
-                    checked={field.value === option.value}
-                    onChange={() => field.onChange(option.value)}
-                  />
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => field.onChange(option.value)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    field.value === option.value
+                      ? "bg-primary text-primary-foreground border-transparent"
+                      : "bg-secondary text-secondary-foreground border-border"
+                  }`}
+                >
                   {option.label}
-                </label>
+                </button>
               ))}
             </div>
           </Field>
@@ -200,11 +241,17 @@ export function ImageUploadForm({ categories }: Props) {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="categoryId">Select category</FieldLabel>
+              <FieldLabel
+                htmlFor="categoryId"
+                className="text-foreground-black font-medium text-sm"
+              >
+                Select category
+              </FieldLabel>
               <select
                 {...field}
                 id="categoryId"
                 aria-invalid={fieldState.invalid}
+                className="flex h-11 w-full border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <option value="">Choose a category...</option>
                 {categories.map((cat) => (
@@ -226,12 +273,18 @@ export function ImageUploadForm({ categories }: Props) {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="newCategoryName">Category name</FieldLabel>
+              <FieldLabel
+                htmlFor="newCategoryName"
+                className="text-foreground-black font-medium text-sm"
+              >
+                Category name
+              </FieldLabel>
               <Input
                 {...field}
                 id="newCategoryName"
                 placeholder="e.g. Ankara Styles"
                 aria-invalid={fieldState.invalid}
+                className="border-input text-foreground placeholder:text-muted-foreground w-full"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -239,16 +292,18 @@ export function ImageUploadForm({ categories }: Props) {
         />
       )}
 
-      <div>
+      {/* Action buttons */}
+      <div className="flex flex-wrap gap-3 pt-2">
         <Button
           type="button"
           variant="outline"
           onClick={() => router.push("/admin/dashboard")}
           disabled={isPending}
+          className="flex-1 px-2"
         >
           Cancel
         </Button>
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending} className="flex-1 px-4">
           {isPending ? "Uploading..." : "Upload image"}
         </Button>
       </div>
