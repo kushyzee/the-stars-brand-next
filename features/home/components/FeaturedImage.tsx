@@ -20,8 +20,13 @@ export default function FeaturedImage({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.1 * index }}
       viewport={{ margin: "-150px 0px", once: true }}
+      className="h-[423px] w-auto"
     >
-      <Image className="aspect-auto h-[423px] w-auto" src={image} alt={alt} />
+      <Image
+        className="h-full w-full object-cover object-top"
+        src={image}
+        alt={alt}
+      />
     </motion.div>
   );
 }
