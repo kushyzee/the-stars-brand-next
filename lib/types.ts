@@ -1,3 +1,5 @@
+export type ObjectPosition = "top" | "center" | "bottom";
+
 export type Category = {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export type GalleryImage = {
   description: string | null;
   category_id: string | null;
   storage_path: string;
+  object_position: ObjectPosition;
   is_published: boolean;
   created_at: string;
   updated_at: string;

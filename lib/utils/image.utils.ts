@@ -1,3 +1,5 @@
+import { ObjectPosition } from "../types";
+
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 const WEBP_QUALITY = 0.85; // 85% quality
 
@@ -6,6 +8,12 @@ export type ConversionResult = {
   wasConverted: boolean;
   originalSize: number;
   convertedSize: number;
+};
+
+const objectPositionMap: Record<ObjectPosition, string> = {
+  top: "object-top",
+  center: "object-center",
+  bottom: "object-bottom",
 };
 
 export async function convertToWebP(file: File): Promise<ConversionResult> {
@@ -92,4 +100,8 @@ export function formatBytes(bytes: number): string {
 
 export function getPublicUrl(storagePath: string) {
   return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/gallery/${storagePath}`;
+}
+
+export function getObjectPositionClass(position: ObjectPosition): string {
+  return objectPositionMap[position] ?? "object-center";
 }

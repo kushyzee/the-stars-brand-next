@@ -26,6 +26,7 @@ export async function uploadImage(data: {
   title: string;
   description?: string;
   categoryId?: string;
+  object_position: "top" | "center" | "bottom";
 }): Promise<ActionResult> {
   const supabase = await createClient();
 
@@ -56,6 +57,7 @@ export async function uploadImage(data: {
     title: data.title,
     description: data.description ?? null,
     category_id: data.categoryId ?? null,
+    object_position: data.object_position,
     storage_path: storagePath,
   });
 
@@ -173,6 +175,7 @@ export async function updateImage(
     title: string;
     description?: string;
     categoryId?: string;
+    object_position: "top" | "center" | "bottom";
   },
 ): Promise<ActionResult> {
   const supabase = await createClient();

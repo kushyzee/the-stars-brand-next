@@ -7,6 +7,7 @@ export const uploadSchema = z
       .refine((f) => f.size > 0, "Please select an image"),
     title: z.string().min(1, "Title is required").max(100, "Title is too long"),
     description: z.string().max(500, "Description is too long").optional(),
+    object_position: z.enum(["top", "center", "bottom"]),
     categoryOption: z.enum(["existing", "new", "none"]),
     categoryId: z.string().optional(),
     newCategoryName: z.string().max(50, "Category name is too long").optional(),

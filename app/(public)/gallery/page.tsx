@@ -4,6 +4,8 @@ import GalleryGrid from "@/features/gallery/components/GalleryGrid";
 import { CategoryFilter } from "@/features/gallery/components/CategoryFilter";
 import { getPublishedCategories } from "@/features/gallery/data/gallery.data";
 import gallery from "@/assets/images/gallery.jpg";
+import { getUser } from "@/features/auth/data/auth.data";
+import { FloatingUploadButton } from "@/features/gallery/components/FloatingUploadButton";
 
 export const metadata = {
   title: "Gallery",
@@ -18,7 +20,10 @@ type Props = {
 
 export default async function GalleryPage({ searchParams }: Props) {
   const { category } = await searchParams;
-  const categories = await getPublishedCategories();
+  const [categories, user] = await Promise.all([
+    getPublishedCategories(),
+    getUser(),
+  ]);
 
   return (
     <div>
@@ -33,6 +38,8 @@ export default async function GalleryPage({ searchParams }: Props) {
       </Suspense>
 
       <GalleryGrid categorySlug={category} />
+
+      {user && <FloatingUploadButton />}
     </div>
   );
 }

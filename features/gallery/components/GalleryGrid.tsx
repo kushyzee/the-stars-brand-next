@@ -13,7 +13,9 @@ export default async function GalleryGrid({ categorySlug }: Props) {
   if (images.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[40vh] p-8 text-center">
-        <p className="font-montserrat text-muted-foreground">No images found.</p>
+        <p className="font-montserrat text-muted-foreground">
+          No images found.
+        </p>
       </div>
     );
   }
@@ -26,6 +28,7 @@ export default async function GalleryGrid({ categorySlug }: Props) {
           src={getPublicUrl(image.storage_path)}
           alt={image.title}
           index={index}
+          objectPosition={image.object_position}
         />
       ))}
     </section>

@@ -20,8 +20,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import type { GalleryImageWithCategory } from "@/lib/types";
-import { getPublicUrl } from "@/lib/utils/image.utils";
+import { getObjectPositionClass, getPublicUrl } from "@/lib/utils/image.utils";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { UploadCloud } from "lucide-react";
 
 type Props = {
   images: GalleryImageWithCategory[];
@@ -65,10 +67,12 @@ export function ImageTable({ images }: Props) {
 
   if (images.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 text-center bg-card border border-border rounded-lg font-montserrat gap-4">
+      <div className="flex flex-col items-center justify-center p-8 text-center bg-card border border-border gap-4">
         <p className="text-muted-foreground text-sm">No images uploaded yet.</p>
         <Link href="/admin/dashboard/upload">
-          <Button>Upload your first image</Button>
+          <Button>
+            <UploadCloud /> Upload your first image
+          </Button>
         </Link>
       </div>
     );
@@ -82,13 +86,15 @@ export function ImageTable({ images }: Props) {
         return (
           <div key={image.id} className="flex gap-4 p-4 items-start">
             {/* Thumbnail */}
-            <div className="shrink-0">
+            <div className="shrink-0 relative w-20 h-20 overflow-hidden">
               <Image
                 src={getPublicUrl(image.storage_path)}
                 alt={image.title}
-                width={80}
-                height={80}
-                className="object-cover w-20 h-20"
+                fill
+                className={cn(
+                  "object-cover ",
+                  getObjectPositionClass(image.object_position),
+                )}
               />
             </div>
 

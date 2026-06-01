@@ -12,29 +12,43 @@ import {
   uploadImage,
   createCategory,
 } from "@/features/admin/actions/admin.actions";
-import { convertToWebP, formatBytes } from "@/lib/utils/image.utils";
+import {
+  convertToWebP,
+  formatBytes,
+  getObjectPositionClass,
+} from "@/lib/utils/image.utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import type { Category } from "@/lib/types";
 import { toast } from "sonner";
+import { ArrowLeft, Upload } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
   categories: Category[];
 };
+
+const positionOptions = [
+  { value: "top", label: "Top" },
+  { value: "center", label: "Center" },
+  { value: "bottom", label: "Bottom" },
+] as const;
 
 export function ImageUploadForm({ categories }: Props) {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const [conversionInfo, setConversionInfo] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const form = useForm<UploadFormValues>({
     resolver: zodResolver(uploadSchema),
     defaultValues: {
       title: "",
       description: "",
+      object_position: "center",
       categoryOption: "none",
       categoryId: "",
       newCategoryName: "",
@@ -44,6 +58,11 @@ export function ImageUploadForm({ categories }: Props) {
   const categoryOption = useWatch({
     control: form.control,
     name: "categoryOption",
+  });
+
+  const objectPosition = useWatch({
+    control: form.control,
+    name: "object_position",
   });
 
   async function onSubmit(data: UploadFormValues) {
@@ -90,12 +109,17 @@ export function ImageUploadForm({ categories }: Props) {
       title: data.title,
       description: data.description,
       categoryId: resolvedCategoryId,
+      object_position: data.object_position,
     });
 
     if (result.error) {
       setServerError(result.error);
       setIsPending(false);
       return;
+    }
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
     }
 
     setIsPending(false);
@@ -143,7 +167,14 @@ export function ImageUploadForm({ categories }: Props) {
               type="file"
               accept="image/jpeg,image/png,image/webp,image/jpg"
               aria-invalid={fieldState.invalid}
-              onChange={(e) => onChange(e.target.files?.[0])}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  if (previewUrl) URL.revokeObjectURL(previewUrl);
+                  setPreviewUrl(URL.createObjectURL(file));
+                  onChange(file);
+                }
+              }}
               value={undefined}
               className="placeholder:text-muted-foreground w-full h-14"
             />
@@ -151,6 +182,49 @@ export function ImageUploadForm({ categories }: Props) {
           </Field>
         )}
       />
+
+      {/* Live preview + position picker */}
+      {previewUrl && (
+        <div className="flex flex-col gap-2">
+          {/* Preview box */}
+          <div className="relative h-64 w-full overflow-hidden rounded-lg border border-border mt-2 mb-4">
+            <Image
+              src={previewUrl}
+              alt="Preview"
+              fill
+              className={`object-cover ${getObjectPositionClass(objectPosition)}`}
+            />
+          </div>
+
+          {/* Position radio buttons */}
+          <Controller
+            name="object_position"
+            control={form.control}
+            render={({ field }) => (
+              <Field>
+                <FieldLabel className="text-foreground-black font-medium text-sm">Image position</FieldLabel>
+                <div className="flex gap-2 flex-wrap">
+                  {positionOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => field.onChange(option.value)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        field.value === option.value
+                          ? "bg-primary text-primary-foreground border-transparent"
+                          : "bg-secondary text-secondary-foreground border-border"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-muted-foreground text-xs mt-1">Adjust to prevent subject from being cropped</p>
+              </Field>
+            )}
+          />
+        </div>
+      )}
 
       {/* Title */}
       <Controller
@@ -301,10 +375,17 @@ export function ImageUploadForm({ categories }: Props) {
           disabled={isPending}
           className="flex-1 px-2"
         >
-          Cancel
+          <ArrowLeft /> Back
         </Button>
-        <Button type="submit" disabled={isPending} className="flex-1 px-4">
-          {isPending ? "Uploading..." : "Upload image"}
+        <Button type="submit" disabled={isPending} className="flex-2 px-4">
+          {isPending ? (
+            "Uploading..."
+          ) : (
+            <>
+              {" "}
+              <Upload /> Upload image{" "}
+            </>
+          )}
         </Button>
       </div>
     </form>

@@ -18,12 +18,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import type { Category, GalleryImageWithCategory } from "@/lib/types";
-import { getPublicUrl } from "@/lib/utils/image.utils";
+import { getObjectPositionClass, getPublicUrl } from "@/lib/utils/image.utils";
 
 type Props = {
   image: GalleryImageWithCategory;
   categories: Category[];
 };
+
+const positionOptions = [
+  { value: "top", label: "Top" },
+  { value: "center", label: "Center" },
+  { value: "bottom", label: "Bottom" },
+] as const;
 
 export function ImageEditForm({ image, categories }: Props) {
   const router = useRouter();
@@ -36,6 +42,7 @@ export function ImageEditForm({ image, categories }: Props) {
     defaultValues: {
       title: image.title,
       description: image.description ?? "",
+      object_position: image.object_position,
       categoryOption: image.category_id ? "existing" : "none",
       categoryId: image.category_id ?? "",
       newCategoryName: "",
@@ -45,6 +52,11 @@ export function ImageEditForm({ image, categories }: Props) {
   const categoryOption = useWatch({
     control: form.control,
     name: "categoryOption",
+  });
+
+  const objectPosition = useWatch({
+    control: form.control,
+    name: "object_position",
   });
 
   async function onSubmit(data: EditFormValues) {
@@ -69,6 +81,7 @@ export function ImageEditForm({ image, categories }: Props) {
       title: data.title,
       description: data.description,
       categoryId: resolvedCategoryId,
+      object_position: data.object_position,
     });
 
     if (result.error) {
@@ -83,16 +96,16 @@ export function ImageEditForm({ image, categories }: Props) {
   return (
     <div className="bg-card border border-border  p-6 flex flex-col gap-6">
       {/* Current image preview */}
-      <div className="flex flex-col items-center gap-3 text-center pb-4 border-b border-border">
-        <Image
-          src={getPublicUrl(image.storage_path)}
-          alt={image.title}
-          width={300}
-          height={300}
-          className="object-cover w-48 h-48"
-          loading="eager"
-        />
-        <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
+      <div className="flex flex-col gap-2">
+        <div className="relative h-64 w-full overflow-hidden rounded-lg border border-border mt-2 mb-4">
+          <Image
+            src={getPublicUrl(image.storage_path)}
+            alt={image.title}
+            fill
+            className={`object-cover ${getObjectPositionClass(objectPosition)}`}
+          />
+        </div>
+        <p className="text-muted-foreground text-sm max-w-xs">
           Image cannot be changed. Delete and re-upload to replace.
         </p>
       </div>
@@ -108,6 +121,36 @@ export function ImageEditForm({ image, categories }: Props) {
             </p>
           </div>
         )}
+
+        {/* Position radio buttons */}
+        <div>
+          <Controller
+            name="object_position"
+            control={form.control}
+            render={({ field }) => (
+              <Field>
+                <FieldLabel className="text-foreground-black font-medium text-sm">Image position</FieldLabel>
+                <div className="flex gap-2 flex-wrap">
+                  {positionOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => field.onChange(option.value)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        field.value === option.value
+                          ? "bg-primary text-primary-foreground border-transparent"
+                          : "bg-secondary text-secondary-foreground border-border"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-muted-foreground text-xs mt-1">Adjust to prevent subject from being cropped</p>
+              </Field>
+            )}
+          />
+        </div>
 
         {/* Title */}
         <Controller
