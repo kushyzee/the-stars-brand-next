@@ -5,6 +5,7 @@ import { ImageTable } from "@/features/admin/components/ImageTable";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Eye, UploadCloud } from "lucide-react";
 
 export default async function DashboardPage() {
   const [stats, images] = await Promise.all([
@@ -18,9 +19,23 @@ export default async function DashboardPage() {
         <h1 className="font-montserrat text-2xl font-bold text-foreground-black">
           Dashboard
         </h1>
-        <Link href="/admin/dashboard/upload" className={cn(buttonVariants())}>
-          Upload image
-        </Link>
+        <div className="flex gap-2 w-full">
+          <Link
+            href="/admin/dashboard/upload"
+            className={cn(buttonVariants(), "px-5 flex-1")}
+          >
+            <UploadCloud /> Upload image
+          </Link>
+          <Link
+            href="/gallery"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "px-5 flex-1",
+            )}
+          >
+            <Eye /> Gallery
+          </Link>
+        </div>
       </div>
 
       <DashboardStats stats={stats} />

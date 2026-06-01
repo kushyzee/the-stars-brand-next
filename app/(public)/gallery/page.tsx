@@ -1,5 +1,8 @@
-import GalleryGrid from "@/features/gallery/components/GalleryGrid";
+import { Suspense } from "react";
 import PageHeader from "@/features/shared/components/PageHeader";
+import GalleryGrid from "@/features/gallery/components/GalleryGrid";
+import { CategoryFilter } from "@/features/gallery/components/CategoryFilter";
+import { getPublishedCategories } from "@/features/gallery/data/gallery.data";
 import gallery from "@/assets/images/gallery.jpg";
 
 export const metadata = {
@@ -9,7 +12,14 @@ export const metadata = {
   alternates: { canonical: "https://thestarbrand.vercel.app/gallery" },
 };
 
-export default function page() {
+type Props = {
+  searchParams: Promise<{ category?: string }>;
+};
+
+export default async function GalleryPage({ searchParams }: Props) {
+  const { category } = await searchParams;
+  const categories = await getPublishedCategories();
+
   return (
     <div>
       <PageHeader
@@ -17,7 +27,12 @@ export default function page() {
         subtitle="Explore our custom tailoring and crochet creations"
         image={gallery}
       />
-      <GalleryGrid />
+
+      <Suspense>
+        <CategoryFilter categories={categories} activeSlug={category ?? null} />
+      </Suspense>
+
+      <GalleryGrid categorySlug={category} />
     </div>
   );
 }
