@@ -390,8 +390,7 @@ export function ImageUploadForm({ categories }: Props) {
             </>
           ) : (
             <>
-              {" "}
-              <UploadCloud /> Upload image{" "}
+              <UploadCloud /> Upload image
             </>
           )}
         </Button>

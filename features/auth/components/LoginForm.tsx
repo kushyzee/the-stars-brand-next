@@ -10,9 +10,12 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { EyeIcon, MailIcon } from "lucide-react";
+import { MailIcon } from "lucide-react";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { Spinner } from "@/components/ui/spinner";
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email"),
@@ -24,6 +27,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export function LoginForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -47,7 +51,7 @@ export function LoginForm() {
     <div className="flex min-h-svh w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-[400px] border border-border p-8 md:p-10 bg-card flex flex-col gap-6 shadow-xs">
         <div className="flex flex-col gap-1 text-center">
-          <h1 className="font-playfair text-3xl font-bold text-foreground-black">
+          <h1 className="font-playfair italic text-3xl font-bold text-foreground-black">
             Admin Login
           </h1>
           <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-widest mt-1">
@@ -88,16 +92,16 @@ export function LoginForm() {
                     autoComplete="email"
                     aria-invalid={fieldState.invalid}
                     placeholder="admin@example.com"
-                    className="font-montserrat w-full placeholder:text-muted-foreground "
+                    className="w-full placeholder:text-muted-foreground "
                   />
                   <InputGroupAddon>
-                    <MailIcon />
+                    <MailIcon className="size-[18px]" />
                   </InputGroupAddon>
                 </InputGroup>
                 {fieldState.invalid && (
                   <FieldError
                     errors={[fieldState.error]}
-                    className="font-montserrat text-xs text-destructive mt-1"
+                    className=" text-xs text-destructive mt-1"
                   />
                 )}
               </Field>
@@ -123,20 +127,30 @@ export function LoginForm() {
                   <InputGroupInput
                     {...field}
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     aria-invalid={fieldState.invalid}
                     placeholder="••••••••"
-                    className="font-montserrat w-full placeholder:text-muted-foreground"
+                    className="w-full placeholder:text-muted-foreground"
                   />
                   <InputGroupAddon align="inline-end">
-                    <EyeIcon />
+                    <InputGroupButton
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-pressed={showPassword}
+                    >
+                      {showPassword ? (
+                        <LuEye className="size-[18px]" />
+                      ) : (
+                        <LuEyeClosed className="size-[18px]" />
+                      )}
+                    </InputGroupButton>
                   </InputGroupAddon>
                 </InputGroup>
                 {fieldState.invalid && (
                   <FieldError
                     errors={[fieldState.error]}
-                    className="font-montserrat text-xs text-destructive mt-1"
+                    className="text-xs text-destructive mt-1"
                   />
                 )}
               </Field>
@@ -144,7 +158,13 @@ export function LoginForm() {
           />
 
           <Button type="submit" disabled={isPending} className="w-full mt-2">
-            {isPending ? "Signing in..." : "Sign in"}
+            {isPending ? (
+              <>
+                <Spinner /> Signing in...{" "}
+              </>
+            ) : (
+              "Sign in"
+            )}
           </Button>
         </form>
       </div>

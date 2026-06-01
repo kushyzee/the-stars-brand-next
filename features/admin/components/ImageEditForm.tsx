@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import type { Category, GalleryImageWithCategory } from "@/lib/types";
 import { getObjectPositionClass, getPublicUrl } from "@/lib/utils/image.utils";
+import { Spinner } from "@/components/ui/spinner";
 
 type Props = {
   image: GalleryImageWithCategory;
@@ -310,7 +311,13 @@ export function ImageEditForm({ image, categories }: Props) {
             Cancel
           </Button>
           <Button type="submit" disabled={isPending} className="flex-1 px-4">
-            {isPending ? "Saving..." : "Save changes"}
+            {isPending ? (
+              <>
+                <Spinner /> Saving...
+              </>
+            ) : (
+              "Save changes"
+            )}
           </Button>
         </div>
       </form>

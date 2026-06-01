@@ -165,8 +165,8 @@ export function ImageTable({ images }: Props) {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Delete image?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        &quot;{image.title}&quot; will be permanently deleted
-                        from your gallery and storage. This cannot be undone.
+                        &quot;{image.title}&quot; will be permanently deleted.
+                        This cannot be undone.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
