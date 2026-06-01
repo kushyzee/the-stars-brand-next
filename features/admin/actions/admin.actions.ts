@@ -148,13 +148,10 @@ export async function togglePublished(
 ): Promise<ActionResult> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("gallery_images")
     .update({ is_published: !currentValue })
-    .eq("id", id)
-    .select();
-
-  console.log("toggle result", { data, error });
+    .eq("id", id);
 
   if (error) {
     return { error: "Failed to update image. Please try again." };
