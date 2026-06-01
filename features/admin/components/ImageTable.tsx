@@ -7,7 +7,7 @@ import {
   deleteImage,
   togglePublished,
 } from "@/features/admin/actions/admin.actions";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -69,10 +69,11 @@ export function ImageTable({ images }: Props) {
     return (
       <div className="flex flex-col items-center justify-center p-8 text-center bg-card border border-border gap-4">
         <p className="text-muted-foreground text-sm">No images uploaded yet.</p>
-        <Link href="/admin/dashboard/upload">
-          <Button>
-            <UploadCloud /> Upload your first image
-          </Button>
+        <Link
+          href="/admin/dashboard/upload"
+          className={cn(buttonVariants(), "w-full")}
+        >
+          <UploadCloud /> Upload your first image
         </Link>
       </div>
     );

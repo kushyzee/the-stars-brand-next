@@ -23,8 +23,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import type { Category } from "@/lib/types";
 import { toast } from "sonner";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft, UploadCloud } from "lucide-react";
 import Image from "next/image";
+import { Spinner } from "@/components/ui/spinner";
 
 type Props = {
   categories: Category[];
@@ -125,6 +126,7 @@ export function ImageUploadForm({ categories }: Props) {
     setIsPending(false);
     toast.success("image uploaded successfully");
     form.reset();
+    setPreviewUrl(null);
     setConversionInfo(null);
   }
 
@@ -187,7 +189,7 @@ export function ImageUploadForm({ categories }: Props) {
       {previewUrl && (
         <div className="flex flex-col gap-2">
           {/* Preview box */}
-          <div className="relative h-64 w-full overflow-hidden rounded-lg border border-border mt-2 mb-4">
+          <div className="relative h-64 w-full overflow-hidden border border-border mt-2 mb-4">
             <Image
               src={previewUrl}
               alt="Preview"
@@ -202,7 +204,9 @@ export function ImageUploadForm({ categories }: Props) {
             control={form.control}
             render={({ field }) => (
               <Field>
-                <FieldLabel className="text-foreground-black font-medium text-sm">Image position</FieldLabel>
+                <FieldLabel className="text-foreground-black font-medium text-sm">
+                  Image position
+                </FieldLabel>
                 <div className="flex gap-2 flex-wrap">
                   {positionOptions.map((option) => (
                     <button
@@ -219,7 +223,9 @@ export function ImageUploadForm({ categories }: Props) {
                     </button>
                   ))}
                 </div>
-                <p className="text-muted-foreground text-xs mt-1">Adjust to prevent subject from being cropped</p>
+                <p className="text-muted-foreground text-xs mt-1">
+                  Adjust to prevent subject from being cropped
+                </p>
               </Field>
             )}
           />
@@ -379,11 +385,13 @@ export function ImageUploadForm({ categories }: Props) {
         </Button>
         <Button type="submit" disabled={isPending} className="flex-2 px-4">
           {isPending ? (
-            "Uploading..."
+            <>
+              <Spinner /> Uploading...
+            </>
           ) : (
             <>
               {" "}
-              <Upload /> Upload image{" "}
+              <UploadCloud /> Upload image{" "}
             </>
           )}
         </Button>

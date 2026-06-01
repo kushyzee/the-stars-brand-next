@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { whatsappUrl } from "@/lib/utilities";
+import { cn } from "@/lib/utils";
 
 export default function WhatsappButton() {
   return (
@@ -7,11 +8,9 @@ export default function WhatsappButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block"
+      className={cn("block", buttonVariants({ variant: "secondary" }))}
     >
-      <Button className="w-full" variant="secondary">
-        WhatsApp
-      </Button>
+      WhatsApp
     </a>
   );
 }

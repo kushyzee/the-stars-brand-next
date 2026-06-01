@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { sendMessage } from "../action/contact.action";
+import { IoIosSend } from "react-icons/io";
 
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
@@ -167,7 +168,9 @@ export default function ContactForm() {
               <Spinner /> Sending...
             </>
           ) : (
-            "Send Message"
+            <>
+              <IoIosSend /> Send Message
+            </>
           )}
         </Button>
         <p className="text-muted-foreground mt-2.5 text-center text-sm">

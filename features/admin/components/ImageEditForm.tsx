@@ -97,7 +97,7 @@ export function ImageEditForm({ image, categories }: Props) {
     <div className="bg-card border border-border  p-6 flex flex-col gap-6">
       {/* Current image preview */}
       <div className="flex flex-col gap-2">
-        <div className="relative h-64 w-full overflow-hidden rounded-lg border border-border mt-2 mb-4">
+        <div className="relative h-64 w-full overflow-hidden border border-border mt-2 mb-4">
           <Image
             src={getPublicUrl(image.storage_path)}
             alt={image.title}
@@ -129,7 +129,9 @@ export function ImageEditForm({ image, categories }: Props) {
             control={form.control}
             render={({ field }) => (
               <Field>
-                <FieldLabel className="text-foreground-black font-medium text-sm">Image position</FieldLabel>
+                <FieldLabel className="text-foreground-black font-medium text-sm">
+                  Image position
+                </FieldLabel>
                 <div className="flex gap-2 flex-wrap">
                   {positionOptions.map((option) => (
                     <button
@@ -146,7 +148,9 @@ export function ImageEditForm({ image, categories }: Props) {
                     </button>
                   ))}
                 </div>
-                <p className="text-muted-foreground text-xs mt-1">Adjust to prevent subject from being cropped</p>
+                <p className="text-muted-foreground text-xs mt-1">
+                  Adjust to prevent subject from being cropped
+                </p>
               </Field>
             )}
           />

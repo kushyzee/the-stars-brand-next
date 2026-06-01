@@ -5,8 +5,9 @@ import MobileNav from "@/features/header/components/MobileNav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MenuItem } from "@/lib/utilities";
 
-export default function Header() {
+export default function Header({ menu }: { menu: MenuItem[] }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -37,8 +38,8 @@ export default function Header() {
               The Stars Brand
             </Link>
           </div>
-          <MobileNav />
-          <DesktopNav />
+          <MobileNav menu={menu} />
+          <DesktopNav menu={menu} />
         </div>
       </div>
     </header>

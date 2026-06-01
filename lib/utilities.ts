@@ -1,10 +1,10 @@
 import * as z from "zod";
 
-const phoneNumber = "2348108882679";
+const phoneNumber = "2348129559571";
 const message = "Hello, I would like to know more about your services";
 export const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-interface MenuItem {
+export interface MenuItem {
   name: string;
   path: string;
 }

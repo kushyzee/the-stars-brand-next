@@ -9,11 +9,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { menu } from "@/lib/utilities";
+import { MenuItem } from "@/lib/utilities";
 import WhatsappButton from "./WhatsappButton";
 import Link from "next/link";
 
-export default function MobileNav() {
+export default function MobileNav({ menu }: { menu: MenuItem[] }) {
   return (
     <Sheet>
       <SheetTrigger asChild className="hover:bg-none lg:hidden">
