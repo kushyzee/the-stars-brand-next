@@ -3,6 +3,13 @@ import ContactForm from "@/features/contact/components/ContactForm";
 import GetInTouch from "@/features/contact/components/GetInTouch";
 import PageHeader from "@/features/shared/components/PageHeader";
 
+export const metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with The Stars Brand. Reach us on WhatsApp at 08129559571 or email adejumobie07@gmail.com to discuss your custom order.",
+  alternates: { canonical: "https://thestarbrand.vercel.app/contact" },
+};
+
 export default function Contact() {
   return (
     <div>
