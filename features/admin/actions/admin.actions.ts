@@ -101,3 +101,100 @@ export async function createCategory(data: {
 
   return { success: true, category };
 }
+
+// ----------------------------------------
+// Delete image
+// ----------------------------------------
+
+export async function deleteImage(id: string): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const { data: image, error: fetchError } = await supabase
+    .from("gallery_images")
+    .select("storage_path")
+    .eq("id", id)
+    .single();
+
+  if (fetchError || !image) {
+    return { error: "Image not found" };
+  }
+
+  // Delete from DB first
+  const { error: dbError } = await supabase
+    .from("gallery_images")
+    .delete()
+    .eq("id", id);
+
+  if (dbError) {
+    return { error: "Failed to delete image. Please try again." };
+  }
+
+  // Then delete from storage
+  await supabase.storage.from("gallery").remove([image.storage_path]);
+
+  revalidatePath("/gallery");
+  revalidatePath("/admin/dashboard");
+
+  return { success: true };
+}
+
+// ----------------------------------------
+// Toggle published
+// ----------------------------------------
+
+export async function togglePublished(
+  id: string,
+  currentValue: boolean,
+): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("gallery_images")
+    .update({ is_published: !currentValue })
+    .eq("id", id)
+    .select();
+
+  console.log("toggle result", { data, error });
+
+  if (error) {
+    return { error: "Failed to update image. Please try again." };
+  }
+
+  revalidatePath("/gallery");
+  revalidatePath("/admin/dashboard");
+
+  return { success: true };
+}
+
+// ----------------------------------------
+// Update image
+// ----------------------------------------
+
+export async function updateImage(
+  id: string,
+  data: {
+    title: string;
+    description?: string;
+    categoryId?: string;
+  },
+): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("gallery_images")
+    .update({
+      title: data.title,
+      description: data.description ?? null,
+      category_id: data.categoryId ?? null,
+    })
+    .eq("id", id);
+
+  if (error) {
+    return { error: "Failed to update image. Please try again." };
+  }
+
+  revalidatePath("/gallery");
+  revalidatePath("/admin/dashboard");
+
+  return { success: true };
+}
