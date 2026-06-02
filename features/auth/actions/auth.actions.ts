@@ -17,7 +17,10 @@ export async function login(data: {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    return { error: "Invalid email or password" };
+    if (error.message.includes("Invalid email or password")) {
+      return { error: "Invalid email or password" };
+    }
+    return { error: "An error occurred. Please try again later." };
   }
 
   revalidatePath("/", "layout");

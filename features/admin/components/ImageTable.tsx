@@ -87,7 +87,7 @@ export function ImageTable({ images }: Props) {
         return (
           <div key={image.id} className="flex gap-4 p-4 items-start">
             {/* Thumbnail */}
-            <div className="shrink-0 relative w-20 h-20 overflow-hidden">
+            <div className="shrink-0 relative w-20 h-20 lg:w-28 lg:h-28 overflow-hidden">
               <Image
                 src={getPublicUrl(image.storage_path)}
                 alt={image.title}
@@ -134,10 +134,7 @@ export function ImageTable({ images }: Props) {
 
               {/* Edit + Delete buttons */}
               <div className="flex gap-2 mt-1">
-                <Link
-                  href={`/admin/dashboard/edit/${image.id}`}
-                  className="flex-1"
-                >
+                <Link href={`/admin/dashboard/edit/${image.id}`}>
                   <Button
                     variant="outline"
                     size="sm"
@@ -154,7 +151,7 @@ export function ImageTable({ images }: Props) {
                       variant="destructive"
                       size="sm"
                       disabled={isActing}
-                      className="flex-1 text-xs h-8"
+                      className="text-xs h-8"
                     >
                       {isActing && pendingAction?.type === "delete"
                         ? "Deleting..."

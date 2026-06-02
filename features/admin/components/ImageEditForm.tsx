@@ -98,7 +98,7 @@ export function ImageEditForm({ image, categories }: Props) {
     <div className="bg-card border border-border  p-6 flex flex-col gap-6">
       {/* Current image preview */}
       <div className="flex flex-col gap-2">
-        <div className="relative h-64 w-full overflow-hidden border border-border mt-2 mb-4">
+        <div className="relative h-64 w-full md:h-80 md:w-80 overflow-hidden border border-border mt-2 mb-4">
           <Image
             src={getPublicUrl(image.storage_path)}
             alt={image.title}

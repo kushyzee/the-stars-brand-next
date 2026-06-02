@@ -22,16 +22,13 @@ export default async function DashboardPage() {
         <div className="flex gap-2 w-full">
           <Link
             href="/admin/dashboard/upload"
-            className={cn(buttonVariants(), "px-5 flex-1")}
+            className={cn(buttonVariants(), "px-5")}
           >
             <UploadCloud /> Upload image
           </Link>
           <Link
             href="/gallery"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "px-5 flex-1",
-            )}
+            className={cn(buttonVariants({ variant: "outline" }), "px-5")}
           >
             <Eye /> Gallery
           </Link>

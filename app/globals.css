@@ -114,10 +114,13 @@
     @apply bg-background text-foreground;
     font-family: "Lora", serif;
   }
-}
-
-.hero-bg {
-  background-image: url("../assets/images/hero-bg.webp");
+  .hero-bg {
+    background-image: url("../assets/images/hero-bg.webp");
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 .pattern {

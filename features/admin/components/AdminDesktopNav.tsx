@@ -23,7 +23,7 @@ export default function AdminDesktopNav() {
               className={`font-montserrat text-sm transition-colors text-white ${
                 pathname === link.href
                   ? "underline underline-offset-2 font-semibold"
-                  : "hover:text-sidebar-foreground no-underline"
+                  : "hover:text-white no-underline underline-offset-2"
               }`}
             >
               {link.label}
