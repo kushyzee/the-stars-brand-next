@@ -3,9 +3,9 @@ import { buttonVariants } from "@/components/ui/button";
 import FeaturedImage from "./FeaturedImage";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import featuredWork1 from "@/assets/images/featured-work1.jpg";
-import featuredWork2 from "@/assets/images/featured-work2.jpg";
-import featuredWork3 from "@/assets/images/featured-work3.jpg";
+import featuredWork1 from "@/assets/images/featured-work1.webp";
+import featuredWork2 from "@/assets/images/featured-work2.webp";
+import featuredWork3 from "@/assets/images/featured-work3.webp";
 
 export default function FeaturedWork() {
   return (

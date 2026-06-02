@@ -2,7 +2,7 @@ import OurMission from "@/features/about/components/OurMission";
 import OurStory from "@/features/about/components/OurStory";
 import WhyChooseUs from "@/features/about/components/WhyChooseUs";
 import PageHeader from "@/features/shared/components/PageHeader";
-import aboutUs from "@/assets/images/about.jpg";
+import aboutUs from "@/assets/images/about.webp";
 
 export const metadata = {
   title: "About",

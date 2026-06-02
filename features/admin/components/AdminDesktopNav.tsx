@@ -20,10 +20,10 @@ export default function AdminDesktopNav() {
           <li key={link.href}>
             <Link
               href={link.href}
-              className={`font-montserrat text-sm transition-colors ${
+              className={`font-montserrat text-sm transition-colors text-white ${
                 pathname === link.href
-                  ? "text-foreground-black font-semibold"
-                  : "text-muted-foreground hover:text-sidebar-foreground"
+                  ? "underline underline-offset-2 font-semibold"
+                  : "hover:text-sidebar-foreground no-underline"
               }`}
             >
               {link.label}

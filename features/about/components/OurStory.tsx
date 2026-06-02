@@ -1,7 +1,7 @@
 "use client";
 
 import SectionHeader from "@/features/shared/components/SectionHeader";
-import esther from "@/assets/images/the_stars_brand.jpg";
+import esther from "@/assets/images/the_stars_brand.webp";
 import { motion } from "motion/react";
 import Line from "@/features/shared/components/Line";
 import Image from "next/image";

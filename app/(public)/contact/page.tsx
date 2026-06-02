@@ -1,4 +1,4 @@
-import contact from "@/assets/images/contact.jpg";
+import contact from "@/assets/images/contact.webp";
 import ContactForm from "@/features/contact/components/ContactForm";
 import GetInTouch from "@/features/contact/components/GetInTouch";
 import PageHeader from "@/features/shared/components/PageHeader";

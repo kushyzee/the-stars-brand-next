@@ -3,7 +3,7 @@ import PageHeader from "@/features/shared/components/PageHeader";
 import GalleryGrid from "@/features/gallery/components/GalleryGrid";
 import { CategoryFilter } from "@/features/gallery/components/CategoryFilter";
 import { getPublishedCategories } from "@/features/gallery/data/gallery.data";
-import gallery from "@/assets/images/gallery.jpg";
+import gallery from "@/assets/images/gallery.webp";
 import { getUser } from "@/features/auth/data/auth.data";
 import { FloatingUploadButton } from "@/features/gallery/components/FloatingUploadButton";
 

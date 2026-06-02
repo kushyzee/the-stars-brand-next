@@ -52,7 +52,7 @@ export default function Hero() {
       variants={heroParent}
       initial="hidden"
       animate="show"
-      className="text-background relative hero-bg bg-cover bg-center bg-no-repeat pt-10"
+      className="text-background relative hero-bg bg-cover bg-right bg-no-repeat pt-10"
     >
       {/* backdrop */}
       <div className="bg-primary/60 absolute inset-0"></div>

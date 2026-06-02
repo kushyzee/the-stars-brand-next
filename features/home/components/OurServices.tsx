@@ -1,5 +1,5 @@
-import customTailoring from "@/assets/images/custom-tailoring.jpg";
-import crochetArtistry from "@/assets/images/crochet-artistry.jpg";
+import customTailoring from "@/assets/images/custom-tailoring.webp";
+import crochetArtistry from "@/assets/images/crochet-artistry.webp";
 import Line from "@/features/shared/components/Line";
 import SectionHeader from "@/features/shared/components/SectionHeader";
 import ServicesCard from "./ServicesCard";

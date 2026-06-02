@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle2, Layers, PencilRuler, Sparkles } from "lucide-react";
-import whyUs from "@/assets/images/why_us.jpg";
+import whyUs from "@/assets/images/why_us.webp";
 import { motion } from "motion/react";
 import SectionHeader from "@/features/shared/components/SectionHeader";
 import OfferCard from "./OfferCard";

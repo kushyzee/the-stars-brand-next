@@ -1,7 +1,7 @@
 "use client";
 
 import SectionHeader from "@/features/shared/components/SectionHeader";
-import craftStory from "@/assets/images/craft-story.jpg";
+import craftStory from "@/assets/images/craft-story.webp";
 import { motion } from "motion/react";
 import Line from "@/features/shared/components/Line";
 import Link from "next/link";
