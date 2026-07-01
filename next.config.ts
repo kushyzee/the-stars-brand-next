@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-  allowedDevOrigins: ["10.245.215.190"],
+  allowedDevOrigins: ["10.245.215.190", "192.168.0.42"],
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
