@@ -198,3 +198,52 @@ export async function updateImage(
 
   return { success: true };
 }
+
+// ----------------------------------------
+// Delete category
+// ----------------------------------------
+
+export async function deleteCategory(id: string): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("categories").delete().eq("id", id);
+
+  if (error) {
+    return { error: "Failed to delete category. Please try again." };
+  }
+
+  revalidatePath("/gallery");
+  revalidatePath("/admin/dashboard");
+
+  return { success: true };
+}
+
+export async function updateCategory(
+  id: string,
+  data: { name: string },
+): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const slug = data.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-");
+
+  const { error } = await supabase
+    .from("categories")
+    .update({ name: data.name.trim(), slug })
+    .eq("id", id);
+
+  if (error) {
+    if (error.code === "23505") {
+      return { error: "A category with this name already exists" };
+    }
+    return { error: "Failed to update category. Please try again." };
+  }
+
+  revalidatePath("/gallery");
+  revalidatePath("/admin/dashboard");
+
+  return { success: true };
+}

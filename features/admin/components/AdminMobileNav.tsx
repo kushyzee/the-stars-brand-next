@@ -14,12 +14,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { logout } from "@/features/auth/actions/auth.actions";
 
-const adminLinks = [
-  { label: "Dashboard", href: "/admin/dashboard" },
-  { label: "Upload", href: "/admin/dashboard/upload" },
-];
+interface AdminMobileNavProps {
+  adminLinks: { label: string; href: string }[];
+}
 
-export default function AdminMobileNav() {
+export default function AdminMobileNav({ adminLinks }: AdminMobileNavProps) {
   return (
     <Sheet>
       <SheetTrigger asChild className="lg:hidden">

@@ -2,6 +2,12 @@ import Link from "next/link";
 import AdminDesktopNav from "./AdminDesktopNav";
 import AdminMobileNav from "./AdminMobileNav";
 
+const adminLinks = [
+  { label: "Dashboard", href: "/admin/dashboard" },
+  { label: "Categories", href: "/admin/dashboard/categories" },
+  { label: "Upload", href: "/admin/dashboard/upload" },
+];
+
 export function AdminNav() {
   return (
     <header className="bg-primary text-primary-foreground border-b border-sidebar-border fixed top-0 right-0 left-0 z-20 h-16 px-6 lg:h-20 lg:px-8">
@@ -18,8 +24,8 @@ export function AdminNav() {
             </span>
           </Link>
 
-          <AdminMobileNav />
-          <AdminDesktopNav />
+          <AdminMobileNav adminLinks={adminLinks} />
+          <AdminDesktopNav adminLinks={adminLinks} />
         </div>
       </div>
     </header>

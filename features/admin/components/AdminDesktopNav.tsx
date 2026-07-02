@@ -5,12 +5,11 @@ import { usePathname } from "next/navigation";
 import { logout } from "@/features/auth/actions/auth.actions";
 import { Button } from "@/components/ui/button";
 
-const adminLinks = [
-  { label: "Dashboard", href: "/admin/dashboard" },
-  { label: "Upload", href: "/admin/dashboard/upload" },
-];
+interface AdminNavProps {
+  adminLinks: { label: string; href: string }[];
+}
 
-export default function AdminDesktopNav() {
+export default function AdminDesktopNav({ adminLinks }: AdminNavProps) {
   const pathname = usePathname();
 
   return (
