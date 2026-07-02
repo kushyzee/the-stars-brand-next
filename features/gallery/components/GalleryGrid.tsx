@@ -1,7 +1,7 @@
 import { getPublishedImages } from "@/features/gallery/data/gallery.data";
 
-import { GalleryItem } from "./GalleryItem";
 import { getPublicUrl } from "@/lib/utils/image.utils";
+import { GalleryGridClient } from "./GalleryGridClient";
 
 type Props = {
   categorySlug?: string;
@@ -20,17 +20,14 @@ export default async function GalleryGrid({ categorySlug }: Props) {
     );
   }
 
-  return (
-    <section className="mb-20 grid grid-cols-1 justify-center gap-2 px-6 sm:grid-cols-2 md:grid-cols-3 md:px-10">
-      {images.map((image, index) => (
-        <GalleryItem
-          key={image.id}
-          src={getPublicUrl(image.storage_path)}
-          alt={image.title}
-          index={index}
-          objectPosition={image.object_position}
-        />
-      ))}
-    </section>
-  );
+  const formattedImages = images.map((image) => ({
+    id: image.id,
+    src: getPublicUrl(image.storage_path),
+    alt: image.title,
+    objectPosition: image.object_position,
+    title: image.title,
+    description: image.description,
+  }));
+
+  return <GalleryGridClient images={formattedImages} />;
 }

@@ -22,3 +22,10 @@ export type GalleryImage = {
 export type GalleryImageWithCategory = GalleryImage & {
   categories: Pick<Category, "id" | "name" | "slug"> | null;
 };
+
+export type GallerySlide = {
+  src: string;
+  alt: string;
+  title?: string;
+  description?: string;
+};

@@ -11,12 +11,20 @@ type Props = {
   alt: string;
   index: number;
   objectPosition: ObjectPosition;
+  onClick: () => void;
 };
 
-export function GalleryItem({ src, alt, index, objectPosition }: Props) {
+export function GalleryItem({
+  src,
+  alt,
+  index,
+  objectPosition,
+  onClick,
+}: Props) {
   return (
     <motion.div
-      className="h-full w-full"
+      className="relative overflow-hidden h-full w-full cursor-pointer"
+      onClick={onClick}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{
@@ -33,7 +41,7 @@ export function GalleryItem({ src, alt, index, objectPosition }: Props) {
         width={600}
         height={600}
         className={cn(
-          "h-full w-full object-cover",
+          "h-full w-full object-cover hover:scale-110 transition-transform duration-300",
           getObjectPositionClass(objectPosition),
         )}
       />

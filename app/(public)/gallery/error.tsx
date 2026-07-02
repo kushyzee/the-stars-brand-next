@@ -18,19 +18,19 @@ export default function GalleryError({ error, reset }: Props) {
       <h2 className="font-playfair text-2xl text-foreground-black">
         Something went wrong
       </h2>
-      <p className="text-muted-foreground font-montserrat text-sm">
+      <p className="text-muted-foreground text-sm">
         We couldn&apos;t load the gallery. Please try again.
       </p>
       <div className="flex gap-3">
         <button
           onClick={reset}
-          className="font-montserrat text-sm underline underline-offset-4 text-foreground-black"
+          className="text-sm underline underline-offset-4 text-foreground-black"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="font-montserrat text-sm underline underline-offset-4 text-muted-foreground"
+          className="text-sm underline underline-offset-4 text-muted-foreground"
         >
           Go home
         </Link>
