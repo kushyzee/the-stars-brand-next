@@ -15,7 +15,11 @@ export default function ServicesCard({
   return (
     <div className="mx-auto max-w-[520px]">
       <div className="relative h-52 lg:h-80">
-        <Image className="h-full w-full object-cover" src={image} alt={title} />
+        <Image
+          className="h-full w-full object-cover object-top"
+          src={image}
+          alt={title}
+        />
       </div>
       <div className="mt-5">
         <h3 className="text-foreground-black font-montserrat text-xl font-bold">

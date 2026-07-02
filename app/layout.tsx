@@ -125,7 +125,7 @@ export default function RootLayout({
     >
       <body>
         <main>
-          <Toaster richColors />
+          <Toaster richColors position="top-right" />
           {children}
         </main>
       </body>

@@ -1,5 +1,5 @@
 import customTailoring from "@/assets/images/custom-tailoring.webp";
-import crochetArtistry from "@/assets/images/crochet-artistry.webp";
+import readyToWear from "@/assets/images/crochet-artistry.webp";
 import Line from "@/features/shared/components/Line";
 import SectionHeader from "@/features/shared/components/SectionHeader";
 import ServicesCard from "./ServicesCard";
@@ -23,9 +23,9 @@ export default function OurServices() {
           content="From traditional Nigerian attire like aso-ebi to modern fashion and corporate wear, we create custom pieces that fit perfectly and reflect your unique style."
         />
         <ServicesCard
-          image={crochetArtistry}
-          title="Crochet Artistry"
-          content="Handcrafted crochet bags, accessories, and home decor pieces. Each item is uniquely made with attention to detail and quality materials."
+          image={readyToWear}
+          title="Ready-to-Wear Fashion"
+          content="Curated ready-to-wear pieces including vintage shirts, stylish two-piece sets, and elegant gowns. Designed for effortless style, comfort and confidence."
         />
       </div>
     </section>

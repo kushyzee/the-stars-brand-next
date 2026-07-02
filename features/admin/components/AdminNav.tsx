@@ -3,6 +3,7 @@ import AdminDesktopNav from "./AdminDesktopNav";
 import AdminMobileNav from "./AdminMobileNav";
 
 const adminLinks = [
+  { label: "Home", href: "/" },
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Categories", href: "/admin/dashboard/categories" },
   { label: "Upload", href: "/admin/dashboard/upload" },
