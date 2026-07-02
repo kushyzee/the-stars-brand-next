@@ -27,7 +27,7 @@ export function CategoryFilter({ categories, activeSlug }: Props) {
   if (categories.length === 0) return null;
 
   return (
-    <div className="flex overflow-x-auto gap-2 px-6 md:px-10 py-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="flex overflow-x-auto gap-2 px-6 md:px-10 py-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
       <button
         onClick={() => handleSelect(null)}
         data-active={activeSlug === null}
