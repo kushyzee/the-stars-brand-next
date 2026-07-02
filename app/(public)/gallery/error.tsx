@@ -18,7 +18,7 @@ export default function GalleryError({ error, reset }: Props) {
       <h2 className="font-playfair text-2xl text-foreground-black">
         Something went wrong
       </h2>
-      <p className="text-muted-foreground text-sm">
+      <p className="text-muted-foreground text-sm font-montserrat">
         We couldn&apos;t load the gallery. Please try again.
       </p>
       <div className="flex gap-3">

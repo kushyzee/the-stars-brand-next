@@ -15,9 +15,10 @@ export async function login(data: {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword(data);
+  console.log(error);
 
   if (error) {
-    if (error.message.includes("Invalid email or password")) {
+    if (error.message.includes("Invalid login")) {
       return { error: "Invalid email or password" };
     }
     return { error: "An error occurred. Please try again later." };

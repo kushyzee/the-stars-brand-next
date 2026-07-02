@@ -64,9 +64,11 @@ export function LoginForm() {
         >
           {/* Server-side error */}
           {serverError && (
-            <p className="text-destructive text-sm font-montserrat text-center mb-2">
-              {serverError}
-            </p>
+            <div className="bg-destructive/10 p-3 border border-destructive/20">
+              <p className="text-destructive text-sm font-montserrat text-center">
+                {serverError}
+              </p>
+            </div>
           )}
 
           {/* Email */}

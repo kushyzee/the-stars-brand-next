@@ -106,6 +106,9 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer utilities {
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -120,6 +123,23 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 30px #ffffff inset !important;
+    -webkit-text-fill-color: #171717 !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  input[type="password"]::-ms-reveal {
+    display: none;
+  }
+
+  input[type="password"]::-webkit-credentials-auto-fill-button {
+    display: none;
   }
 }
 
