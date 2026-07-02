@@ -6,6 +6,7 @@ import { getPublishedCategories } from "@/features/gallery/data/gallery.data";
 import gallery from "@/assets/images/gallery.webp";
 import { getUser } from "@/features/auth/data/auth.data";
 import { FloatingUploadButton } from "@/features/gallery/components/FloatingUploadButton";
+import GalleryLoading from "@/features/gallery/components/GalleryLoading";
 
 export const metadata = {
   title: "Gallery",
@@ -33,11 +34,11 @@ export default async function GalleryPage({ searchParams }: Props) {
         image={gallery}
       />
 
-      <Suspense>
+      <Suspense fallback={<GalleryLoading />}>
         <CategoryFilter categories={categories} activeSlug={category ?? null} />
-      </Suspense>
 
-      <GalleryGrid categorySlug={category} />
+        <GalleryGrid categorySlug={category} />
+      </Suspense>
 
       {user && <FloatingUploadButton />}
     </div>

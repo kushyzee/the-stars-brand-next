@@ -3,9 +3,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function GalleryLoading() {
   return (
     <div>
-      {/* Page header skeleton */}
-      <Skeleton className="h-64 w-full md:h-80" />
-
       {/* Category filter skeleton */}
       <div className="flex gap-2 overflow-hidden px-6 py-6 md:px-10">
         {Array.from({ length: 5 }).map((_, i) => (
